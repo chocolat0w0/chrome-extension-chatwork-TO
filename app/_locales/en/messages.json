@@ -1,0 +1,10 @@
+{
+  "appName": {
+    "message": "chrome extension chatwork to group",
+    "description": "The name of the application"
+  },
+  "appDescription": {
+    "message": "create To member group",
+    "description": "The description of the application"
+  }
+}
