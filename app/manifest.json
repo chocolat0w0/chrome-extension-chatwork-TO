@@ -19,5 +19,8 @@
     ],
     "persistent": false
   },
-  "permissions": []
+  "permissions": [],
+  "web_accessible_resources": [
+    "images/*.png"
+  ]
 }
