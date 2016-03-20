@@ -10,7 +10,7 @@
   "default_locale": "en",
   "content_scripts": [{
     "matches": [ "https://www.chatwork.com/*", "https://kcw.kddi.ne.jp/*" ],
-    "js": [ "scripts/lib/jquery-2.2.2.min.js", "scripts/erase-to-name.js" ]
+    "js": [ "bower_components/jquery/dist/jquery.min.js", "scripts/erase-to-name.js" ]
   }],
   "background": {
     "scripts": [
