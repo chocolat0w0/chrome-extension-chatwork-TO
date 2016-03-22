@@ -3,7 +3,7 @@ icon.src = chrome.extension.getURL('images/eraser.png');
 
 var iconWrapper = document.createElement('li');
 iconWrapper.id = '_replaceButton';
-iconWrapper.class = '_showDescription';
+iconWrapper.setAttribute('class', '_showDescription');
 iconWrapper.setAttribute('style', 'display: inline-block; padding-top: 3px;');
 iconWrapper.setAttribute('role', 'button');
 iconWrapper.setAttribute('aria-label', 'Toの宛名を削除');
