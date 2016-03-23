@@ -1,18 +1,12 @@
-var icon = document.createElement('img');
-icon.src = chrome.extension.getURL('images/eraser.png');
+import {create} from './modules/tool-icon-creater';
 
-var iconWrapper = document.createElement('li');
-iconWrapper.id = '_replaceButton';
-iconWrapper.setAttribute('class', '_showDescription');
-iconWrapper.setAttribute('style', 'display: inline-block; padding-top: 3px;');
-iconWrapper.setAttribute('role', 'button');
-iconWrapper.setAttribute('aria-label', 'Toの宛名を削除');
+var replaceButton = create('_replaceButton', 'Toの宛名を削除', 'eraser.png');
 
-iconWrapper.appendChild(icon);
-
-document.getElementById('_chatSendTool').appendChild(iconWrapper);
+document.getElementById('_chatSendTool').appendChild(replaceButton);
 
 $('#_replaceButton').click(function(e){
     var val = $('#_chatText').val();
     $('#_chatText').val((val.replace((/(\[.*\]).*\n/g), '$1\b ')));
 });
+
+var test;
