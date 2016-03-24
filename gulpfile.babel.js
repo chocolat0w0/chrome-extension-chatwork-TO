@@ -6,6 +6,10 @@ import runSequence from 'run-sequence';
 import {stream as wiredep} from 'wiredep';
 
 const $ = gulpLoadPlugins();
+let browserify = require("browserify"),
+    babelify   = require("babelify"),
+    source     = require("vinyl-source-stream"),
+    through2 = require('through2');
 
 gulp.task('extras', () => {
   return gulp.src([
@@ -79,17 +83,30 @@ gulp.task('chromeManifest', () => {
   .pipe(gulp.dest('dist'));
 });
 
-gulp.task('babel', () => {
-  return gulp.src('app/scripts.babel/**/*.js')
-      .pipe($.babel({
+gulp.task('babelify', function() {
+  var destPath = './app/scripts/';
+
+  gulp.src('./app/scripts.babel/**/*.js')
+    .pipe($.plumber())
+    .pipe(through2.obj(function(file, encode, callback) {
+      browserify(file.path, {
+        debug: false
+      }).transform(babelify, {
         presets: ['es2015']
-      }))
-      .pipe(gulp.dest('app/scripts'));
+      }).bundle(function(err, res) {
+        if (err) { return callback(err); }
+        file.contents = res;
+        callback(null, file);
+      }).on("error", function (err) {
+        console.log("Error : " + err.message);
+      });
+    }))
+    .pipe(gulp.dest(destPath));
 });
 
 gulp.task('clean', del.bind(null, ['.tmp', 'dist']));
 
-gulp.task('watch', ['lint', 'babel', 'html'], () => {
+gulp.task('watch', ['lint', 'babelify', 'html'], () => {
   $.livereload.listen();
 
   gulp.watch([
@@ -100,7 +117,7 @@ gulp.task('watch', ['lint', 'babel', 'html'], () => {
     'app/_locales/**/*.json'
   ]).on('change', $.livereload.reload);
 
-  gulp.watch('app/scripts.babel/**/*.js', ['lint', 'babel']);
+  gulp.watch('app/scripts.babel/**/*.js', ['babelify']);
   gulp.watch('bower.json', ['wiredep']);
 });
 
@@ -125,7 +142,7 @@ gulp.task('package', function () {
 
 gulp.task('build', (cb) => {
   runSequence(
-    'lint', 'babel', 'chromeManifest',
+    'babelify', 'chromeManifest',
     ['html', 'images', 'extras'],
     'size', cb);
 });
