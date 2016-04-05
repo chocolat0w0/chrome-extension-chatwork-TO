@@ -8,5 +8,3 @@ $('#_replaceButton').click(function(e){
     var val = $('#_chatText').val();
     $('#_chatText').val((val.replace((/(\[.*\]).*\n/g), '$1\b ')));
 });
-
-var test;
