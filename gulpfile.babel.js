@@ -106,7 +106,7 @@ gulp.task('babelify', function() {
 
 gulp.task('clean', del.bind(null, ['.tmp', 'dist']));
 
-gulp.task('watch', ['lint', 'babelify', 'html'], () => {
+gulp.task('watch', ['babelify', 'html'], () => {
   $.livereload.listen();
 
   gulp.watch([
