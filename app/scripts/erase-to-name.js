@@ -12,8 +12,6 @@ $('#_replaceButton').click(function (e) {
     $('#_chatText').val(val.replace(/(\[.*\]).*\n/g, '$1\b '));
 });
 
-var test;
-
 },{"./modules/tool-icon-creater":2}],2:[function(require,module,exports){
 'use strict';
 
